@@ -7,7 +7,7 @@ const AllChatList = () => {
             <div className="chat-items h-full overflow-hidden "> 
                 <div className="chat-items-inner h-full overflow-y-auto">
                    
-                   <ChatMsgItems/>
+                   <ChatMsgItems />
                 </div>
             </div>
         </>

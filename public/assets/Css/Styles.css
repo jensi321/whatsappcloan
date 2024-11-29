@@ -253,6 +253,12 @@ input[type="radio"] {
   animation-duration: 1s;
 }
 
+/* Emojis Eybord */
+
+.epr_q53mwh{
+  display: none;
+}
+
 @keyframes helpanimation {
   100% {
     background-position-x: 100%;

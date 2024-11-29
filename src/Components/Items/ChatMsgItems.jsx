@@ -4,7 +4,7 @@ import { FaAngleDown } from 'react-icons/fa6'
 import { Link } from 'react-router-dom'
 
 const ChatMsgItems = () => {
-    
+
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const menuRef = useRef(null);
 
@@ -18,7 +18,7 @@ const ChatMsgItems = () => {
             if (menuRef.current && !menuRef.current.contains(event.target)) {
                 setIsMenuOpen(false);
             }
-          
+
         };
 
         document.addEventListener('mousedown', handleClickOutside);
@@ -46,7 +46,7 @@ const ChatMsgItems = () => {
             {
                 ChatList.map((i, index) => {
                     return (
-                        <div className={`item ${i.isRead === false ? 'unread' : ''}`} key={index}>
+                        <div className={`item ${i.isRead === false ? 'unread' : ''}`} key={index} >
                             <div className="items-inner relative flex w-full flex-row h-[72px] ">
                                 <div className="img-content flex items-center justify-center">
                                     <div className="pl-[13px] pr-[15px] ">
@@ -69,7 +69,7 @@ const ChatMsgItems = () => {
                                         </span>
                                         <span className='flex items-center'>
                                             <div className="messagecount hidden">{i.unreadmsg}</div>
-                                            <Link className='downarrow hidden text-[#667781] ml-[3px]'  onClick={() => toggleMenu(index)} ref={menuRef}>
+                                            <Link className='downarrow hidden text-[#667781] ml-[3px]' onClick={() => toggleMenu(index)} ref={menuRef}>
                                                 <FaAngleDown />
                                             </Link>
                                             {

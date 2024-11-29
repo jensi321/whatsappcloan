@@ -11,19 +11,18 @@ import ProfilePage from './Components/Pages/ProfilePage'
 const App = () => {
   return (
     <>
-      <BrowserRouter>
-      <Routes>
-          <Route path='/' element={<LandingPage/>}/>
-          <Route path='/chat' element={<ChatPage/>}/>
-          <Route path='/status' element={<StatusPage/>}/>
-          <Route path='/channels' element={<ChannelsPage/>}/>
-          <Route path='/communities' element={<CommunitiesPage/>}/>
-          <Route path='/settings' element={<SettingsPage/>}/>
-          <Route path='/profile' element={<ProfilePage/>}/>
+        <BrowserRouter>
+          <Routes>
+            <Route path='/' element={<LandingPage />} />
+            <Route path='/chat' element={<ChatPage />} />
+            <Route path='/status' element={<StatusPage />} />
+            <Route path='/channels' element={<ChannelsPage />} />
+            <Route path='/communities' element={<CommunitiesPage />} />
+            <Route path='/settings' element={<SettingsPage />} />
+            <Route path='/profile' element={<ProfilePage />} />
 
-        </Routes> 
-      </BrowserRouter>
-      
+          </Routes>
+        </BrowserRouter>
     </>
   )
 }

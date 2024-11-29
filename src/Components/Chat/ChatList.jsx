@@ -44,7 +44,7 @@ const ChatList = () => {
         <>
             <div className="chatlist bg-[white]">
                 <header>
-                    <div className="h-[59px] color-[#3b4a54] pr-[20px] pl-[25px] box-border flex items-center bg-[#fff]">
+                    <div className="h-[59px] color-[#3b4a54] pr-[10px] pl-[16px] box-border flex items-center bg-[#fff]">
                         <div className="w-full flex items-center justify-center">
                             <div className="-mt-[3px] text-[#111b21] grow text-[1.375rem]">
                                 <h1 className='leading text-[22px] font-bold'>Chats</h1>
@@ -83,7 +83,7 @@ const ChatList = () => {
                     <div className="flex">
                         <div className="h-[49px] w-full flex items-center px-[12px] z-[100] relative box-border">
                             <div className="bg-[#f0f2f5] rounded-[8px] flex items-center justify-center w-full h-[35px] pl-[10px]">
-                                <button className=' flex items-center justify-center  '>
+                                <button className=' flex items-center justify-center  w-[24px] h-[24px]'>
                                     <img src="assets/Images/search.svg" className='w-[24px] h-[24px]' alt="" />
                                 </button>
                                 <input type="text" className='ml-[30px] bg-transparent w-full text-[15px] outline-none' placeholder='Search' />

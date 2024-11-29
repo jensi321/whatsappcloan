@@ -3,20 +3,38 @@ import { GoTriangleDown } from 'react-icons/go'
 import { Link } from 'react-router-dom'
 import VideocallModel from '../Models/VideocallModel';
 import ChatFooterModel from '../Models/ChatFooterModel';
-import { Footericons } from '../data';
 import ChatDotsModal from '../Models/ChatDotsModal';
 import SearchMsgModel from '../Models/SearchMsgModel';
+import Picker, { SkinTones } from 'emoji-picker-react';
+
 
 const ChatHistory = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isDotsMenu, setIsDotsMenu] = useState(false);
     const [videoCall, setVideoCall] = useState(false);
-    const [search, setSearch] =useState(false);
+    const [search, setSearch] = useState(false);
+    const [emojiPicker, setEmojiPicker] = useState(false)
+    const [inputValue, setInputValue] = useState('');
+    const [chosenEmoji, setChosenEmoji] = useState(null);
+    const [isInputFocused, setIsInputFocused] = useState(false);
+
+    const [messages, setMessages] = useState([
+        { text: "Hello! How are you?", sender: "receiver" },
+        { text: "I'm good, thanks! How about you?", sender: "sender" },
+        { text: "What are you doing today?", sender: "receiver" }
+    ]);
+    const onEmojiClick = ( emojiObject) => {
+        setChosenEmoji(emojiObject);
+        console.log(chosenEmoji);
+    }
+
+
 
     // Create refs for the menus
     const menuRef = useRef(null);
     const dotsMenuRef = useRef(null);
     const videoRef = useRef(null);
+
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
@@ -33,13 +51,33 @@ const ChatHistory = () => {
         setSearch(true);
     }
 
+    const openEmojiPicker = () => {
+        setEmojiPicker(!emojiPicker);
+    };
+
+    const handleKeyDown = (event) => {
+        if (event.key === 'Enter') {
+            event.preventDefault(); // Prevents the default action (like a form submission)
+            sendMessage(); // Call the sendMessage function
+        }
+    };
+    const sendMessage = () => {
+        if (inputValue.trim() !== '') {
+            // Add the new message to the messages array
+            setMessages(prevMessages => [
+                ...prevMessages,
+                { text: inputValue, sender: 'sender' } // Assuming the current user is the sender
+            ]);
+            setInputValue(''); // Clear the input field after sending
+        }
+    };
 
     // Close menus when clicking outside
     useEffect(() => {
         const handleClickOutside = (event) => {
-            if (menuRef.current && !menuRef.current.contains(event.target)) {
-                setIsMenuOpen(false);
-            }
+            // if (menuRef.current && !menuRef.current.contains(event.target)) {
+            //     setIsMenuOpen(false);
+            // }
             if (dotsMenuRef.current && !dotsMenuRef.current.contains(event.target)) {
                 setIsDotsMenu(false);
             }
@@ -73,7 +111,7 @@ const ChatHistory = () => {
                             <div className="flex items-start mt-[-1px] ">
                                 <div className="flex grow overflow-hidden text-[16px] leading-[16px] color-[#111b21] text-left text-ellipsis	">
                                     <div className="inline-flex items-center">
-                                        <span className='text-ellipsis	inline-block relative grow '>+91 83899 33232</span>
+                                        <span className='text-ellipsis	inline-block relative grow '>John Doe</span>
                                     </div>
                                 </div>
                             </div>
@@ -105,7 +143,7 @@ const ChatHistory = () => {
                                         </span>
                                     </Link>
                                     {isDotsMenu && (
-                                        <ChatDotsModal/>
+                                        <ChatDotsModal />
                                     )}
 
                                 </div>
@@ -126,48 +164,47 @@ const ChatHistory = () => {
                                         </div>
                                     </div>
                                     <div className="">
-                                        <div className="resivemsg">
-                                            <div className="mb-[12px] relative">
-                                                <div className="items-start px-[63px] flex flex-col ">
-                                                    <div className="max-w-[65%] relative text-[14.2px] leading-[19px] color-[#111b21] rounded-[7.5px]">
-                                                        <span className='absolute left-[-8px] top-0 z-index-[100] block w-[8px] h-[13px] '>
-                                                            <img src="assets/Images/Resivemsg.svg" alt="" />
-                                                        </span>
-                                                        <div className="rounded-tl-[0] bg-[#fff] shadow-custom relative z-[200] rounded-[7.5px]">
-                                                            <div className="pb-[8px] pt-[6px] box-border pl-[9px] pr-[7px] ">
-                                                                <div className="flex flex-row justify-start items-start ">
-                                                                    <span>Hello ...!</span>
+
+                                        {
+                                            messages.map((i,index) =>{
+                                                return(
+                                                    <div className={`${i.sender}`} key={index}>
+                                                    <div className="mb-[12px] relative">
+                                                        <div className={` px-[63px] flex flex-col ${i.sender !== 'sender' ? 'items-start' : 'items-end'}`}>
+                                                            <div className="max-w-[65%] relative text-[14.2px] leading-[19px] color-[#111b21] rounded-[7.5px]">
+                                                                <span className={`absolute  top-0 z-index-[100] block w-[8px] h-[13px]  ${i.sender !== 'sender' ? 'left-[-8px]': 'right-[-8px]'}`}>
+                                                                    <img src={i.sender !== 'sender' ? 'assets/Images/Resivemsg.svg' : 'assets/Images/sendmsg.svg' } alt="" />
+                                                                </span>
+                                                                <div className={`${ i.sender !== 'sender' ? 'rounded-tl-[0] bg-[#fff]' : 'rounded-tr-[0] bg-[#d9fdd3]'}  shadow-custom relative z-[200] rounded-[7.5px]`}>
+                                                                    <div className="pb-[8px] pt-[6px] box-border pl-[9px] pr-[7px] ">
+                                                                        <div className="flex flex-row justify-start items-start ">
+                                                                            <span>{i.text}</span>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div className="sendmsg">
-                                            <div className="mb-[12px] relative">
-                                                <div className="items-end px-[63px] flex flex-col ">
-                                                    <div className="max-w-[65%] relative text-[14.2px] leading-[19px] color-[#111b21] rounded-[7.5px]">
-                                                        <span className='absolute right-[-8px] top-0 z-index-[100] block w-[8px] h-[13px] '>
-                                                            <img src="assets/Images/sendmsg.svg" alt="" />
-                                                        </span>
-                                                        <div className="rounded-tr-[0] bg-[#d9fdd3] shadow-custom relative z-[200] rounded-[7.5px]">
-                                                            <div className="pb-[8px] pt-[6px] box-border pl-[9px] pr-[7px] ">
-                                                                <div className="flex flex-row justify-start items-start ">
-                                                                    <span>Hello ...!</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                                )
+                                            })
+                                        }
+                                        
                                     </div>
                                 </div>
+
+
                             </div>
                         </div>
                     </div>
+                    {
+                        emojiPicker && (
+                            <div className="w-full " >
+                                <Picker onEmojiClick={onEmojiClick} skinTone={SkinTones} style={{width:'100%'}} />
 
+                            </div>
+                        )
+                    }
                     {/* Footer */}
                     <footer className='relative z-[2] box-border order-3 w-full h-[62px] block'>
                         <div className="pb-[5px] min-h-[62px] items-end z-[2] box-border flex px-[16px] flex-row relative bg-[#f0f2f5]">
@@ -176,17 +213,14 @@ const ChatHistory = () => {
                                     <div className='flex items-center'>
                                         <div className="flex text-[#54656f] items-center justify-center border-box min-h-[52px]">
                                             <div className="w-[26px] flex mx-[8px] h-[42px]">
-                                                {Footericons.map((i, index) => {
-                                                    return (
-                                                        <button className={`bottom-[8px] w-[26px] top-[9px]  rounded-[2px] absolute ${i.class}`} key={index}>
-                                                            <div className="m-[1px]">
-                                                                <span>
-                                                                    <img src={i.img} alt="" />
-                                                                </span>
-                                                            </div>
-                                                        </button>
-                                                    )
-                                                })}
+
+                                                <button className={`bottom-[8px] w-[26px] top-[9px]  rounded-[2px] absolute`} onClick={openEmojiPicker}>
+                                                    <div className="m-[1px]">
+                                                        <span>
+                                                            <img src='assets/Images/Emoji.svg' alt="" />
+                                                        </span>
+                                                    </div>
+                                                </button>
 
 
                                             </div>
@@ -207,13 +241,19 @@ const ChatHistory = () => {
                                         </div>
                                         <div className="flex items-end w-full">
                                             <div className="my-[5px] border w-full border-[white] border-solid min-h-[20px] px-[12px] mx-[8px] bg-white rounded-[8px] flex text-[.9375rem] leading-[20px] py-[9px]">
-                                                <input type="text" className='w-full outline-none' placeholder='Type a message' />
+                                                <input type="text" className='w-full outline-none' placeholder='Type a message'
+                                                    value={inputValue}
+                                                    onChange={(e) => setInputValue(e.target.value)} 
+                                                    onFocus={() => setIsInputFocused(true)}
+                                                    onBlur={() => setIsInputFocused(false)}
+                                                    onKeyDown={handleKeyDown}
+                                                    />
                                             </div>
                                             <div className="w-[26px] flex mx-[8px] h-[42px]">
-                                                <button className='bottom-[8px] w-[26px] top-[9px]  rounded-[2px] absolute block'>
+                                                <button className='bottom-[8px] w-[26px] top-[9px]  rounded-[2px] absolute block' onClick={sendMessage}>
                                                     <div className="m-[1px]">
                                                         <span>
-                                                            <img src="assets/Images/Sendicon.svg" className='opacity-[.4]' alt="" />
+                                                            <img src={`assets/Images/Sendicon.svg` } className={isInputFocused ? 'opacity-[1]' : 'opacity-[.4]'} alt="" />
                                                         </span>
                                                     </div>
                                                 </button>
@@ -230,11 +270,12 @@ const ChatHistory = () => {
 
             {
                 search && (
-                    <SearchMsgModel search={search} close={() =>{setSearch(false)}}/>
+                    <SearchMsgModel search={search} close={() => { setSearch(false) }} />
                 )
             }
 
-            
+
+
             {videoCall && (
                 <VideocallModel />
             )}

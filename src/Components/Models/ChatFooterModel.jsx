@@ -1,6 +1,7 @@
 import React from 'react'
 
 const ChatFooterModel = () => {
+
   return (
     <>
       <span >
@@ -8,23 +9,37 @@ const ChatFooterModel = () => {
           <ul>
             <div className="py-[3px]">
               <div className="mx-[8px]">
-                <li className='hover:bg-[#f5f6f6]'>
+                <li className='hover:bg-[#f5f6f6] relative'>
                   <div className="h-[40px] flex items-center flex-row justify-start ml-[8px] mr-[32px] ">
                     <span className='min-w-[20px] mr-[12px]'>
                       <img src="assets/Images/Document.svg" alt="" />
                     </span>
                     <span className='text-[#3b4a54] overflow-hidden text-ellipsis leading-[21px]'>Document</span>
                   </div>
+
+
+                  <input
+                    type="file"
+                    style={{ opacity: '0', position:'absolute', left:0, right:0, bottom:0, top:0, width:'100%',   }} // Hide the input
+                    
+                  />
                 </li>
               </div>
               <div className="mx-[8px]">
-                <li className='hover:bg-[#f5f6f6]'>
+                <li className='hover:bg-[#f5f6f6] relative'>
                   <div className="h-[40px] flex items-center flex-row justify-start ml-[8px] mr-[32px] ">
                     <span className='min-w-[20px] mr-[12px]'>
                       <img src="assets/Images/Photos.svg" alt="" />
                     </span>
                     <span className='text-[#3b4a54] overflow-hidden text-ellipsis leading-[21px]'>Photos & videos</span>
                   </div>
+                  
+                  <input
+                    type="file"
+                    accept="image/*,video/*"
+                    style={{ opacity: '0', position:'absolute', left:0, right:0, bottom:0, top:0, width:'100%',   }} // Hide the input
+                    
+                  />
                 </li>
               </div>
               <div className="mx-[8px]">
@@ -82,6 +97,7 @@ const ChatFooterModel = () => {
           </ul>
         </div>
       </span>
+
     </>
   )
 }

@@ -1,10 +1,11 @@
 import React from 'react'
 import Header from '../Header'
-// import DownloadMsg from './DownloadMsg'
 import ChatList from './ChatList'
 import ChatHistory from './ChatHistory'
 
+
 const ChatFirst = () => {
+ 
   return (
     <>
       <div className="chat ">
@@ -13,8 +14,7 @@ const ChatFirst = () => {
           <div className=" whatsapp" >
             <Header />
             <ChatList/>
-            <ChatHistory/>
-            {/* <DownloadMsg /> */}
+             <ChatHistory/> 
           </div>
 
         </div>
